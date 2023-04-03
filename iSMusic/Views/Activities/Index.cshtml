@@ -1,0 +1,252 @@
+﻿@using X.PagedList.Mvc;
+@using X.PagedList;
+
+@model IEnumerable<isMusic.ViewModels.ActivityVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1 class="ms-2">活動管理</h1>
+
+@*DATATABLE*@
+<div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <h4 class="m-0 font-weight-bold text-primary">活動列表</h4>
+        <a class="me-4" href="@Url.Action("Create", "Activities")">
+            <i class="fa-solid fa-plus fs-3 theme-color fs-3"></i>
+        </a>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table dt-res activityTable table-hover" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr class="table-primary">
+                        <th class="text-center align-middle" style="cursor:pointer" >
+                            @Html.DisplayNameFor(model => model.activityName)
+                        </th>
+                        <th class="text-center align-middle"  style="cursor:pointer">
+                            @Html.DisplayNameFor(model => model.activityInfo)
+                        </th>
+                        <th class="text-center align-middle"  style="cursor:pointer">
+                            @Html.DisplayNameFor(model => model.activityLocation)
+                        </th>
+                        <th class="text-center align-middle"  style="cursor:pointer">
+                            @Html.DisplayNameFor(model => model.activityStartTime)
+                        </th>
+                        <th class="text-center align-middle"  style="cursor:pointer">
+                            @Html.DisplayNameFor(model => model.activityEndTime)
+                        </th>
+
+                        <th class="text-center align-middle"  style="cursor:pointer">
+                            @Html.DisplayNameFor(model => model.activityType)
+                        </th>
+
+                        @*<th>
+                                 @Html.DisplayNameFor(model => model.memberAccount)
+                            </th>*@
+                        @*<th>
+                                 @Html.DisplayNameFor(model => model.activityImagePath)
+                            </th>*@
+                        <th class="text-center"  style="cursor:pointer">
+                            @Html.DisplayNameFor(model => model.publishedStatus)
+                        </th>
+                        @*<th>
+                                @Html.DisplayNameFor(model => model.checkedBy)
+                            </th>*@
+                        <th class="text-center align-middle"  style="cursor:pointer">
+                            修改刪除
+                        </th>
+                        </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="align-middle fs-5">
+                            <td>
+                                @Html.DisplayFor(modelItem => item.activityName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.activityInfo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.activityLocation)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.activityStartTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.activityEndTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.activityType)
+                            </td>
+
+                            @*<td class="align-middle">
+            @Html.DisplayFor(modelItem => item.memberAccount)
+        </td>*@
+                            @*<td>
+            @Html.DisplayFor(modelItem => item.activityImagePath)
+        </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.publishedStatus)
+                            </td>
+                            @*<td>
+            @Html.DisplayFor(modelItem => item.checkedBy)
+        </td>*@
+                            
+                            <td class="text-nowrap">
+                                <a class="btn btn-outline-secondary" href="@Url.Action("Edit", "Activities", new { id = item.id })">
+                                <i class="fa fa-pencil-square-o"></i>
+                                編輯</a>
+                                <button value="@item.id" class="btn btn-outline-danger delete">
+                                <i class="fa fa-trash-o"></i>刪除</button>
+                            </td>
+
+                            @*<button type="button" class="btn btn-warning" href="~/Activities/Edit">Warning</button>*@
+                            @*<button type="button" class="btn btn-danger">Danger</button>*@
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.id }, new { @class = "btn btn-warning" })*@
+                            @*@Html.ActionLink("Delete", "Delete", new { id = item.id })*@
+                          
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+@*@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page }),
+      new X.PagedList.Mvc.Common.PagedListRenderOptions
+      {
+          DisplayItemSliceAndTotal = false,
+          ContainerDivClasses = new[] { "navigation", "d-flex justify-content-end" },
+          LiElementClasses = new[] { "page-item" },
+          PageClasses = new[] { "page-link" },
+          DisplayLinkToFirstPage = X.PagedList.Web.Common.PagedListDisplayMode.Always,
+          LinkToFirstPageFormat = "首頁",
+          DisplayLinkToLastPage = X.PagedList.Web.Common.PagedListDisplayMode.Always,
+          LinkToLastPageFormat = " 末頁"
+      })*@
+
+
+
+
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('ul.pagination > li.disabled > a').addClass('page-link');
+            //卡片頁面
+            $('.container').addClass("min-width", "500px");
+            $('.activityTable').DataTable({
+                "columns": [
+                    { "width": "16%", "visible": true },
+                    { "width": "19%" },
+                    { "width": "12%" },
+                    { "width": "12%" },
+                    { "width": "12%" },
+                    { "width": "11%" },
+                    { "width": "10%", "visible": true },
+                    { "width": "8%", "visible": true }
+                ],
+                responsive: {
+                    breakpoints: [
+                        { name: 'desktop', width: Infinity },
+                        { name: 'tablet', width: 1024 },
+                        { name: 'fablet', width: 768 },
+                        { name: 'phone', width: 480 }
+                    ],
+                    columns: [
+                        //name
+                        { visible: true },
+                        //info
+                        { visible: true },
+                        //location
+                        { visible: false, target: 'fablet phone' },
+                        //st
+                        { visible: false, target: 'fablet phone' },
+                        //et
+                        { visible: false, target: 'fablet phone' },
+                        //type
+                        { visible: false, target: 'fablet phone'},
+                        //checked
+                        { visible: true },
+                        //edit
+                        { visible: true }
+                    ]
+                },
+                columnDefs: [
+                    {
+                        className: 'control',
+                        orderable: false,
+                        targets: -1
+                    },
+                    {
+                        responsivePriority: 1,
+                        targets: 0
+                    },
+                    {
+                        responsivePriority: 2,
+                        targets: -2
+                    },
+                    {
+                        responsivePriority: 3,
+                        targets: -1
+                    }
+                ],
+                order: [0, 'asc']
+            });
+            //資料顯示排版
+            $('#dataTable_length').addClass("w-100");
+            $('#dataTable_length label').addClass("d-flex align-items-center justify-content-center h5");
+            $('#dataTable_length select').addClass("d-flex align-items-center ms-3 me-3 w-50");
+            //搜尋排版
+            $('#dataTable_filter').addClass("w-100");
+            $('#dataTable_filter label').addClass("d-flex align-items-center justify-content-center h5");
+            $('#dataTable_filter input').addClass("d-flex align-items-center ms-3 me-3 w-50");
+            //表格排版
+            $('#dataTable_wrapper').children(".row").eq(0).addClass("mb-3");
+            $('#dataTable thead tr th').addClass("p-2");
+            $('#dataTable tbody tr td').addClass("ps-3 pt-2 pb-2");
+            $('tbody tr').find("td:eq(6)").children("input").addClass("middle-align");
+            $('tbody tr').find("td:eq(7)").addClass("ps-2 pt-2 pb-2 pe-0").removeClass("diabled", "disabled");
+            $('tbody tr').find("td:eq(3)").addClass("fs-14px");
+            $('tbody tr').find("td:eq(4)").addClass("fs-14px");
+            $('#dataTable_info').parent().addClass("middle-align")
+            $('#dataTable_info').addClass("fs-14px")
+            $('#dataTable_paginate').parent().addClass("pt-3")
+            //刪除鍵
+            $(".delete").unbind().click(function () {
+                 var entryId = $(this).val();
+            if (confirm("您確定是否要刪除?"))
+            {
+            var selected = $(this).parents("tr").addClass("selected");
+            $.ajax(
+            {
+                url: '@Url.Action("Delete", "Activities")',
+                type: "POST",
+                dataType: "json",
+                data: { id: entryId }
+            })
+            .done(function (data) {
+                if (data == 1) {
+                    table.row(".selected").remove().draw(false); // Delete row from view
+                }
+                else {
+                    Alert("Something went wrong...")
+                }
+            });
+            }
+
+        });
+
+
+    });
+    </script>
+}
+

@@ -1,0 +1,109 @@
+﻿@using X.PagedList.Mvc.Fluent
+@using iSMusic.Models.EFModels
+
+
+@model X.PagedList.IPagedList<Order>
+
+@{
+    ViewBag.Title = "Index";
+    //var categories = ViewBag.Categories as IEnumerable<SelectListItem>;   //目前呼叫的是錯的 要去OrdersController的Index改
+    var memberNickName = ViewBag.memberNickName as string;
+
+}
+
+<h2>訂單</h2>
+
+<form method="get">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="caption">
+                <div class="row">
+                    @*<div class="col-md-4">分類:@Html.DropDownList("categoryId", categories, new { @class = "form-control form-select " })</div>*@
+                    <div class="col-md-4">訂購人:<input type="text" name="memberNickName" class="form-control" value="@memberNickName"></div>
+                    <div class="row " style="margin-top: 10px; margin-bottom: 20px; padding-left: 15px; max-width:250px ">
+                        <input type="submit" class="btn btn-primary btn-lg" value="Search" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            訂購人
+        </th>
+        <th>
+            折價卷
+        </th>
+        <th>
+            付款方式
+        </th>
+        <th>
+            訂單狀態
+        </th>
+        <th>
+            付款狀態
+        </th>
+        <th>
+            訂單生成時間
+        </th>
+        <th>
+            收件者
+        </th>
+        <th>
+            地址
+        </th>
+        <th>
+            連絡電話
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.memberNickName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coupon.couponText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentList[item.payments - 1])
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.orderStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.paid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.receiver)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cellphone)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>
+@(Html.Pager(Model)
+    .Url(page => Url.Action("Index", new { pageNumber=page, memberNickName = ViewBag.memberNickName }))
+    .ClassicPlusFirstAndLast())

@@ -1,0 +1,94 @@
+﻿@model iSMusic.Models.ViewModels.SongDeleteVM
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>刪除歌曲</h2>
+
+<h3>確認要刪除這首歌?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal p-4">
+        <div class="row">
+            <dt class="col-md-3">
+                @Html.DisplayNameFor(model => model.SongName)
+            </dt>
+
+            <dd class="col-md-9">
+                @Html.DisplayFor(model => model.SongName)
+            </dd>
+        </div>
+
+        <div class="row">
+            <dt class="col-md-3">
+                @Html.DisplayNameFor(model => model.SingersName)
+            </dt>
+
+            <dd class="col-md-9 d-block">
+                @foreach (string singerName in Model.SingersName)
+                {
+                    <div>@singerName</div>
+                }
+            </dd>
+        </div>
+
+        <div class="row">
+            <dt class="col-md-3">
+                @Html.DisplayNameFor(model => model.GenreName)
+            </dt>
+
+            <dd class="col-md-9">
+                @Html.DisplayFor(model => model.GenreName)
+            </dd>
+        </div>
+
+        <div class="row">
+            <dt class="col-md-3">
+                @Html.DisplayNameFor(model => model.Language)
+            </dt>
+
+            <dd class="col-md-9">
+                @Html.DisplayFor(model => model.Language)
+            </dd>
+        </div>
+
+        <div class="row">
+            <dt class="col-md-3">
+                @Html.DisplayNameFor(model => model.Released)
+            </dt>
+
+            <dd class="col-md-9">
+                @Html.DisplayFor(model => model.Released, "ChineseDate")
+            </dd>
+        </div>
+
+        <div class="row">
+            <dt class="col-md-3">
+                @Html.DisplayNameFor(model => model.Status)
+            </dt>
+
+            <dd class="col-md-9">
+                @if (Model.Status == true)
+                {
+                    @:已上架
+                }
+                else
+                {
+                    @:已下架
+                }
+            </dd>
+        </div>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to List", "Index") |
+            <input type="submit" value="刪除" class="btn btn-outline-dark" />
+        </div>
+    }
+</div>
+

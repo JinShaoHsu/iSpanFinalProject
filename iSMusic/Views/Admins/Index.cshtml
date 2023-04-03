@@ -1,0 +1,56 @@
+﻿@model IEnumerable<iSMusic.Models.ViewModels.AdminIndexVM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>權限管理</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="table123">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.departmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.adminAccount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.roleName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.departmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.adminAccount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.roleName)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { account = item.adminAccount }) |*@
+                    @Html.ActionLink("Edit", "Edit", new { adminAccount = item.adminAccount }) |
+                    @Html.ActionLink("Delete", "Delete", new { adminAccount = item.adminAccount })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+     $('#table123').DataTable();
+});</script>
+} 

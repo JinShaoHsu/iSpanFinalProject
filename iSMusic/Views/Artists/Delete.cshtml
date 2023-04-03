@@ -1,0 +1,81 @@
+﻿@model iSMusic.Models.EFModels.Artist
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>刪除表演者</h2>
+
+<h3>確定要刪除這位表演者?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal p-4">
+        <div class="row">
+            <dt class="col-md-2">
+                表演者姓名
+            </dt>
+
+            <dd class="col-md-10">
+                @Html.DisplayFor(model => model.artistName)
+            </dd>
+        </div>
+
+        <div class="row">
+            <dt class="col-md-2">
+            </dt>
+
+            <dd class="col-md-10">
+                @if (Model.isBand == true)
+                {
+                    <span>樂團</span>
+                }
+                else
+                {
+                    <span>單人</span>
+                }
+            </dd>
+        </div>
+
+        <div class="row">
+            @if (Model.artistGender != null)
+            {
+                <dt class="col-md-2">
+                    性別
+                </dt>
+
+                <dd class="col-md-10">
+                    @if (Model.artistGender == true)
+                    {
+                        <span>男</span>
+                    }
+                    else if (Model.artistGender == false)
+                    {
+                        <span>女</span>
+                    }
+                </dd>
+            }
+        </div>
+
+        <div class="row">
+            <dt class="col-md-2">
+                關於
+            </dt>
+
+            <dd class="col-md-10">
+                @Html.DisplayFor(model => model.artistAbout)
+            </dd>
+        </div>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Back to List", "Index") |
+            @Html.ActionLink("Back to Edit", "Edit", new { id = Model.id }) |
+            <input type="submit" value="Delete" class="btn btn-outline-dark" />
+        </div>
+    }
+</div>
+

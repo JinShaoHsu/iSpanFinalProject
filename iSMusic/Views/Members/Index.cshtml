@@ -1,0 +1,92 @@
+﻿@using X.PagedList.Mvc.Fluent
+@using iSMusic.Models.EFModels
+
+@model X.PagedList.IPagedList<Member>
+
+@*@model IEnumerable<iSMusic.Models.ViewModels.MemberVM>*@
+
+@{
+    ViewBag.Title = "會員管理";
+}
+
+
+<h2>會員總覽</h2>
+<form method="get">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="caption">
+                <h3>Search</h3>
+                <div class="row">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px; margin-bottom: 20px; padding-left: 15px;">
+        @*<input type="submit" class="btn btn-primary" value="Search" />*@
+    </div>
+</form>
+
+<p>
+    @Html.ActionLink("新增會員", "Register")
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">
+                暱稱
+            </th>
+            <th scope="col">
+                帳號
+            </th>
+            <th scope="col">
+                電子信箱
+            </th>
+            <th scope="col">
+                通訊地址
+            </th>
+            <th scope="col">
+                行動電話
+            </th>
+            <th scope="col">
+                驗證狀態
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+   
+    <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr class="table-active">
+                <td>
+                    @Html.DisplayFor(modelItem => item.memberNickName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.memberAccount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.memberEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.memberAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.memberCellphone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isConfirmed)
+                </td>
+                <td>
+                    @Html.ActionLink("編輯資料", "EditProfile", new { Id = item.id }) |
+                    @Html.ActionLink("刪除", "DeleteAccount", new { id = item.id })
+                </td>
+            </tr>
+        }
+    </tbody>
+    
+
+</table>
+@(Html.Pager(Model)
+    .Url(page => Url.Action("Index", new { pageNumber=page}))
+    .ClassicPlusFirstAndLast())

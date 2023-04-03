@@ -1,0 +1,125 @@
+﻿@model iSMusic.Models.ViewModels.ArtistVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>新增表演者</h2>
+
+
+@using (Html.BeginForm("Create", "Artists", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>*必填</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.CoverFile, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input class="form-control" data-val="true" data-val-required="請選一張圖片" type="file" name="CoverFile" id="myImg" accept="image/gif, image/jpeg, image/png" />
+                        @Html.ValidationMessageFor(model => model.CoverFile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-2"></div>
+                    <img id="preview" style="max-width:250px; max-height: 250px" />
+                </div>
+
+                <div class="form-group col-md-12 row m-auto  mt-3">
+                    @Html.LabelFor(model => model.artistName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.artistName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.artistName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row mt-3">
+                    @Html.LabelFor(model => model.isBand, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.RadioButtonFor(model => model.isBand, true, new
+                       {
+                           id = "TrueValueID",
+                           @class = "band form-check-input"
+                       }) 樂團
+
+                        @Html.RadioButtonFor(model => model.isBand, false, new
+                       {
+                           id = "FalseValueID",
+                           @class = "band form-check-input"
+                       }) 單人
+                        @Html.ValidationMessageFor(model => model.isBand, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row mt-3">
+                    @Html.LabelFor(model => model.artistGender, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.RadioButtonFor(model => model.artistGender, true, new
+                       {
+                           id = "TrueValueID",
+                           @class = "gender form-check-input"
+                       }) 男
+
+                        @Html.RadioButtonFor(model => model.artistGender, false, new
+                       {
+                           id = "FalseValueID",
+                           @class = "gender form-check-input"
+                       }) 女
+                        @Html.ValidationMessageFor(model => model.artistGender, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row mt-3">
+                    @Html.LabelFor(model => model.artistAbout, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.artistAbout, new { @class = "form-control", @rows = "10" })
+                        @Html.ValidationMessageFor(model => model.artistAbout, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group d-flex justify-content-center mt-5">
+                <div class="col-md-2">
+                    <input type="submit" value="建立" class="btn col-md-12" style="background-color: #F68657; color: white" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        let isBands = document.querySelectorAll(".band");
+        for (let isBand of isBands) {
+            isBand.addEventListener("change", function () {
+                let genders = document.querySelectorAll(".gender");
+                if (this.value == "True") {
+                    for (let gender of genders) {
+                        gender.setAttribute("disabled", "");
+                    }
+                } else {
+                    for (let gender of genders) {
+                        gender.removeAttribute("disabled");
+                    }
+                }
+            })
+        }
+        $(document).ready(function () {
+            $("#myImg").on("change", function (e) {
+                const file = this.files[0];
+                const objectURL = URL.createObjectURL(file);
+                $("#preview").attr("src", objectURL);
+            })
+        });
+    </script>
+}
+
+
