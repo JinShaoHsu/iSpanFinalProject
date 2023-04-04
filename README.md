@@ -9,6 +9,9 @@
 * 刪除會員
 * 瀏覽會員
 ##
+![首頁](/images/index.png)
+##
+![會員](/images/member.png)
 GET /Members/Index
 這個方法會列出所有會員的資訊。你可以使用以下的 query string 參數來篩選會員：
 
@@ -41,6 +44,8 @@ private IPagedList<Member> GetPagedProducts(int? Id, string Account, int pageNum
     return query.ToPagedList(pageNumber, pageSize);
 }
 ```
+##
+![註冊](/images/register.png)
 註冊會員
 GET /Members/Register
 這個方法會回傳一個表單，供使用者輸入註冊資訊。
@@ -80,6 +85,8 @@ public ActionResult Register(RegisterVM model)
     }
 }
 ```
+##
+![編輯](/images/edit.png)
 編輯會員資料
 GET /Members/EditProfile/{id}
 這個方法會回傳一個表單，供使用者編輯會員資料。
